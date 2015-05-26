@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div style="margin-top: 70px;"><div>
+
+	<div class="container">
+	  <div class = 'flash'>
+			{% with messages = get_flashed_messages() %}
+		      {% if messages %}
+		          
+		        
+		        {% for message in messages %}
+		            <div class="alert alert-success" role="alert"> {{ message }}</div>
+		        {% endfor %}
+		        
+		        {% endif %}
+		    {% endwith %}
+
+		</div>
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <br/>
+        <h1 class="text-center" style="color: white; text-shadow: 2px;  -webkit-text-stroke: 2px black; text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Welcome to The Sports Catalog!</h1>
+        <br/>
+        <p>Look for items by selecting on the categories below. If you login in (via Facebook) you can add, edit, and delete items in the category.</p>
+     
+      </div>
+      
+	<div class="row">
+	{% for category in categories %}
+		<div class="col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{category.name}}</div>
+				<div class="panel-body">
+					<ul class="nav nav-pills nav-stacked">
+						{% for catalog_item in catalog_items %}
+							{% if catalog_item.category_id == category.id %}
+							<li><a href="{{url_for('showCategoryItem', category_id = category.id, item_id=catalog_item.id)}}">{{catalog_item.title}}</a></li>
+							{% endif %}	
+						{% endfor %}
+					</ul>
+					<p><a class="btn btn-primary btn-block btn-xs" style="margin-top: 10px; margin-bottom: -10px" href="{{ url_for('showCategoryItems', category_id = category.id) }}" role="button">Go To Category</a></p>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+

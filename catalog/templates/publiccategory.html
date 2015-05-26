@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div style="margin-top: 70px;"><div>
+	<div class="container">
+		<div class = 'flash'>
+			{% with messages = get_flashed_messages() %}
+		      {% if messages %}
+		          
+		        
+		        {% for message in messages %}
+		            <div class="alert alert-success" role="alert"> {{ message }}</div>
+		        {% endfor %}
+		        
+		        {% endif %}
+		    {% endwith %}
+
+		</div>
+	<!-- Main component for a primary marketing message or call to action -->
+	<div class="jumbotron">
+		<h1 class="text-center">{{ category.name }}</h1>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+		<ul class="breadcrumb">
+		  <li><a href="/">Home</a></li>
+		  <li class="active">Category: {{ category.name }} </li>
+		</ul>
+		</div>
+	{% for catalog_item in catalog_items %}
+		<div class="col-md-4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					{{catalog_item.title}}
+				</div>
+				<div class="panel-body">
+					<p>{{catalog_item.description}}</p>
+					<p><a class="btn btn-primary btn-block" href="{{url_for('showCategoryItem', category_id = category.id, item_id=catalog_item.id)}}" role="button">Learn More</a></p> 
+				</div>
+			</div>
+		</div>	
+	{% endfor %}
+	</div>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+
